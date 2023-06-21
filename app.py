@@ -6,17 +6,17 @@ import streamlit as st
 
 
 menu_data = [
-    {
+        {
         "key": "sub1",
         "label": "Navigation One",
-        "icon": "MailOutlined",
+        "icon": "fa-address-book",  # FontAwesome icon
         "children": [
             {
                 "key": "g1",
                 "label": "<b>Item 1</b>",
-                "icon": None,
+                "icon": "fa-ambulance",  # FontAwesome icon
                 "children": [
-                    {"key": "1", "label": "Option 1", "icon": None},
+                    {"key": "1", "label": "Option 1", "icon": "fa-anchor"},  # FontAwesome icon
                     {"type": "divider"},
                     {"key": "2", "label": "Option 2", "icon": None},
                 ],
@@ -74,6 +74,12 @@ menu_data = [
         ],
         "type": "group",
     },
+    {
+        "key": "grp_new",
+        "label": "<b> Group </b>",
+        "icon": None,
+        "type": "group",
+    },
 ]
 
 custom_css = {"ant-menu-item-divider" : {"border-top: 10px solid red;"}}
@@ -88,4 +94,4 @@ with st.sidebar:
 
    
 
-    selected_key = st_ant_menu(menu_data, generall_css_styling=generall_css_styling)
+    selected_key = st_ant_menu(menu_data, generall_css_styling=generall_css_styling,inlineIndent=24)

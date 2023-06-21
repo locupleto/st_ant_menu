@@ -1,7 +1,7 @@
 import streamlit.components.v1 as components
 import os
 
-_RELEASE = True
+_RELEASE = False
 
 if not _RELEASE:
     # Declare the component with a given name and URL if we're not in release mode.
@@ -53,7 +53,8 @@ def validate_menu_data(menu_data):
             raise ValueError("The 'disabled' field must be a boolean")
 
 
-def st_ant_menu(menu_data = None, key="first_menu", defaultValue=None, defaultSelectedKeys=None, defaultOpenKeys=None, additionalHeight=100, multiple=False, css_styling_menu=None, generall_css_styling=None, theme="light",menu_click=False, iconSize=15, modus = "inline") :
+def st_ant_menu(menu_data = None, key="first_menu", defaultValue=None, defaultSelectedKeys=None, defaultOpenKeys=None, additionalHeight=0, multiple=False, css_styling_menu=None,
+                 generall_css_styling=None, theme="light",menu_click=False, iconSize=15, modus = "inline", inlineIndent=24) :
     """
     Create a menu component that can be used in Streamlit.
 
@@ -81,6 +82,7 @@ def st_ant_menu(menu_data = None, key="first_menu", defaultValue=None, defaultSe
     :param theme: The theme of the menu. Can be either "light" or "dark".
     :param iconSize: The size of the icons in the menu. Default is 15.
     :param modus: The modus of the menu. Can be either "inline" or "horizontal".
+    :param inlineIndent: The indent of the menu items in inline modus. Default is 24.
 
     :return: The value of the component.
     """
@@ -101,7 +103,8 @@ def st_ant_menu(menu_data = None, key="first_menu", defaultValue=None, defaultSe
           theme = theme, 
           menu_click = menu_click,
             iconSize = iconSize,
-            modus = modus
+            modus = modus,
+            inlineIndent = inlineIndent
     )
 
     # Return the component value, handling the case where it's a list.

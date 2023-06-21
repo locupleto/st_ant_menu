@@ -8,6 +8,7 @@ import {
 } from "streamlit-component-lib";
 import * as AllIcons from "@ant-design/icons";
 import { ComponentType } from "react";
+import { Helmet } from 'react-helmet';
 
 
 // Create a mapping of all available Ant Design icons
@@ -31,6 +32,44 @@ interface MenuItem {
 //  * @param data The raw menu data to be parsed
 //  * @returns An array of MenuItem objects
 //  */
+// function parseMenuItems(data: any[], iconSize: string): MenuItem[] {
+//   return data.map((item: any) => {
+//     const menuItem: MenuItem = {
+//       key: item.key,
+//       label: item.label === null ? null : "",
+//       icon: undefined,
+//       children: item.children ? parseMenuItems(item.children, iconSize) : undefined,
+//       type: item.type || undefined,
+//       disabled: item.disabled ? true : false,
+//     };
+//     if (item.icon) {
+//       try {
+//         const Icon = Icons[item.icon];
+//         if (Icon) {
+//           menuItem.icon = React.createElement(Icon, {
+//             style: { fontSize: iconSize }
+//           });
+//         }
+//       } catch (error) {
+//         console.warn(`Failed to create icon for "${item.icon}":`, error);
+//       }
+//     }
+//     if (item.label && item.label !== null) {
+//       if (item.label.match(/<(.*?)>/)) {
+//         menuItem.label = (
+//           <span
+//             dangerouslySetInnerHTML={{ __html: item.label }}
+//           ></span>
+//         ) as unknown as string;
+//       } else {
+//         menuItem.label = item.label as string;
+//       }
+//     }
+//     return menuItem;
+//   });
+// }
+
+
 function parseMenuItems(data: any[], iconSize: string): MenuItem[] {
   return data.map((item: any) => {
     const menuItem: MenuItem = {
@@ -41,18 +80,25 @@ function parseMenuItems(data: any[], iconSize: string): MenuItem[] {
       type: item.type || undefined,
       disabled: item.disabled ? true : false,
     };
+
     if (item.icon) {
       try {
-        const Icon = Icons[item.icon];
-        if (Icon) {
-          menuItem.icon = React.createElement(Icon, {
-            style: { fontSize: iconSize }
-          });
+        if (item.icon.startsWith('fa-')) {
+          // If the icon is a FontAwesome icon, create an <i> tag
+          menuItem.icon = <i className={`fa ${item.icon}`} style={{ fontSize: iconSize }} />;
+        } else {
+          const Icon = Icons[item.icon];
+          if (Icon) {
+            menuItem.icon = React.createElement(Icon, {
+              style: { fontSize: iconSize }
+            });
+          }
         }
       } catch (error) {
         console.warn(`Failed to create icon for "${item.icon}":`, error);
       }
     }
+
     if (item.label && item.label !== null) {
       if (item.label.match(/<(.*?)>/)) {
         menuItem.label = (
@@ -64,9 +110,11 @@ function parseMenuItems(data: any[], iconSize: string): MenuItem[] {
         menuItem.label = item.label as string;
       }
     }
+
     return menuItem;
   });
 }
+
 
 /**
  * Get the height of the menu component, taking into account any additional height specified by the user.
@@ -87,44 +135,58 @@ function get_height_menu() {
     }
   });
 
-  menu_height = menu_height + 150;
+  menu_height = menu_height + 0;
+
+  console.log("menu_height", menu_height - 0);
 
   return menu_height;
 }
+
 
 /**
  * A React component that renders an Ant Design menu based on the provided menu data.
  */
 const MenuComponent = (props: ComponentProps) => {
-  const { menu_data, key, defaultSelectedKeys, defaultOpenKeys, additionalHeight, multiple, css_styling, theme,menu_click, iconSize,modus,generall_css_styling} = props.args;
+  const { menu_data, key, defaultSelectedKeys, defaultOpenKeys, additionalHeight, multiple, css_styling, theme,menu_click, iconSize,modus,generall_css_styling, inlineIndent} = props.args;
   const [openKeys, setOpenKeys] = useState<string[]>([]);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   const rootSubmenuKeys = menu_data.map((item: any) => item.key);
 
- // Set the height of the Streamlit iframe to match the height of the menu
- useEffect(() => {
-  const height = get_height_menu() + additionalHeight;
-  Streamlit.setFrameHeight(parseInt(`${height}`, 10));
-}, []);
+  useEffect(() => {
+    // Select the menu element
+    const menuElement = document.querySelector('.ant-menu');
+  
+    // If the menu exists, observe changes in its size
+    if (menuElement) {
+      const resizeObserver = new ResizeObserver(entries => {
+        for (let entry of entries) {
+          // Set the height when the size of the menu changes
+          const height = entry.target.clientHeight;
+          Streamlit.setFrameHeight(height + additionalHeight);
+        }
+      });
+  
+      // Start observing
+      resizeObserver.observe(menuElement);
+  
+      // Cleanup
+      return () => {
+        resizeObserver.unobserve(menuElement);
+      };
+    }
+  }, []);
 
   const onOpenChange: MenuProps['onOpenChange'] = (keys) => {
     const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
     if (rootSubmenuKeys.indexOf(latestOpenKey!) === -1) {
       setOpenKeys(keys);
-      setTimeout(() => {
-        var height = get_height_menu()
-        Streamlit.setFrameHeight(height + additionalHeight);
-      }, 300);
+    
     } else {
       if (menu_click == true) {
-      Streamlit.setComponentValue(keys);
+        Streamlit.setComponentValue(keys);
       }
       setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
-  
-      setTimeout(() => {
-        var height = get_height_menu()
-        Streamlit.setFrameHeight(height + additionalHeight);
-      }, 300);
+      
     }
   };
 
@@ -145,15 +207,23 @@ const MenuComponent = (props: ComponentProps) => {
   }, [selectedKeys]);
 
 
-
   return (
     <>
-      <style dangerouslySetInnerHTML={{ __html: generall_css_styling }} />
+      <Helmet>
+        <script
+          src="https://kit.fontawesome.com/c7cbba6207.js"
+          crossOrigin="anonymous"
+          id="font-awesome-icons"
+        />
+      </Helmet>
+     
+        <style dangerouslySetInnerHTML={{ __html: generall_css_styling }} />
       <Menu
         id={key}
         mode={modus}
         openKeys={openKeys}
         onOpenChange={onOpenChange}
+        inlineIndent={inlineIndent}
         style={{
           width: "100%",
           height: "100%",
