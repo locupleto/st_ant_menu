@@ -1,6 +1,7 @@
 from st_ant_menu import st_ant_menu
 
 import streamlit as st
+import streamlit.components.v1 as components
 
 st.set_page_config(layout="wide")
 
@@ -121,15 +122,61 @@ col_left, col_right = st.columns((3, 1))
 with col_right:
 
 
-    defauktSelectedKeys = st.multiselect("defaultSelectedKeys",keys)
+    defaultSelectedKeys = st.multiselect("defaultSelectedKeys",keys)
     defaultOpenKeys = st.multiselect("defaultOpenKeys",keys, disabled=False)
     multiple = st.checkbox("multiple",False)
-    modue = st.selectbox("modus",["inline","horizontal"])
+    modus = st.selectbox("modus",["inline","horizontal"])
+
 
     with st.echo():
         with col_left:
-            selected_key = st_ant_menu(menu_data,key="menu2",defaultSelectedKeys=defauktSelectedKeys,defaultOpenKeys=defaultOpenKeys,multiple=multiple,modus=modue
+            selected_key = st_ant_menu(menu_data,key="menu2",defaultSelectedKeys=defaultSelectedKeys,defaultOpenKeys=defaultOpenKeys,multiple=multiple,modus=modus,
+            )
+            
+            st.write("Return")
+            st.write(selected_key)
+
+
+
+st.title("Test")
+
+col_left, col_right = st.columns((3, 1))
+
+with col_right:
+
+
+    defaultSelectedKeys = ["1"]
+    defaultOpenKeys = ["sub1"]
+  
+
+    with st.echo():
+        with col_left:
+            selected_key = st_ant_menu(menu_data,key="menu3",defaultSelectedKeys=defaultSelectedKeys,defaultOpenKeys=defaultOpenKeys
                                        )
             
             st.write("Return")
             st.write(selected_key)
+
+
+st.title("Test")
+
+col_left, col_right = st.columns((3, 1))
+
+with col_right:
+
+
+    defaultSelectedKeys = ["1"]
+    defaultOpenKeys = ["sub1"]
+  
+
+    with st.echo():
+        with col_left:
+            selected_key = st_ant_menu(menu_data,key="menu5",modus="horizontal"
+                                       )
+            
+            st.write("Return")
+            st.write(selected_key)
+
+
+
+

@@ -88,10 +88,11 @@ function parseMenuItems(data: any[], iconSize: string, iconMinWidth: string): Me
  */
 const MenuComponent = (props: ComponentProps) => {
   const { menu_data, key, defaultSelectedKeys, defaultOpenKeys, additionalHeight, close_auto, multiple, css_styling, theme,menu_click, iconSize,modus,generall_css_styling, inlineIndent, custom_font_awesome_url,
-    iconMinWidth, url_param, write_to_url ,use_fragments} = props.args;
-  const [openKeys, setOpenKeys] = useState<string[]>([]);
-  const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
-  const rootSubmenuKeys = menu_data.map((item: any) => item.key);
+    iconMinWidth} = props.args;
+    const [openKeys, setOpenKeys] = useState<string[]>(defaultOpenKeys || []);
+    const [selectedKeys, setSelectedKeys] = useState<string[]>(defaultSelectedKeys || []);
+    const rootSubmenuKeys = menu_data.map((item: any) => item.key);
+  
 
   useEffect(() => {
     // Select the menu element
@@ -149,10 +150,13 @@ const MenuComponent = (props: ComponentProps) => {
       setSelectedKeys([key]);
     }
   };
-  
+
+
   useEffect(() => {
     Streamlit.setComponentValue(selectedKeys);
   }, [selectedKeys]);
+
+
 
 
   return (

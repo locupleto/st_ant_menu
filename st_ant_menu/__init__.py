@@ -1,7 +1,7 @@
 import streamlit.components.v1 as components
 import os
 
-_RELEASE = True
+_RELEASE = False
 
 if not _RELEASE:
     # Declare the component with a given name and URL if we're not in release mode.
@@ -55,7 +55,7 @@ def validate_menu_data(menu_data):
 
 def st_ant_menu(menu_data = None, key="first_menu", defaultValue=None, defaultSelectedKeys=[], defaultOpenKeys=[], additionalHeight=0, multiple=False, css_styling_menu=None,
                  generall_css_styling=None, theme="light",menu_click=False, iconSize=15, modus = "inline", inlineIndent=24, close_auto=True, custom_font_awesome_url = "https://kit.fontawesome.com/c7cbba6207.js",
-                 iconMinWidth=20,return_value=True,write_to_url=False,url_param="menu_wert",use_fragments=False) :
+                 iconMinWidth=20,return_value=True) :
     """
     Create a menu component that can be used in Streamlit.
 
@@ -88,9 +88,6 @@ def st_ant_menu(menu_data = None, key="first_menu", defaultValue=None, defaultSe
     :param custom_font_awesome_url: The url of the font awesome library. Default is "https://kit.fontawesome.com/c7cbba6207.js".
     :param iconMinWidth: The minimum width of the icons in the menu. Default is 30. - Used to make sure that the text always starts at the same position.
     :param return_value: Whether the component should return a value. Default is True.
-    :param write_to_url: Whether the component should write the value to the url. Default is False.
-    :param url_param: The url parameter to which the value should be written. Default is "menu_wert".
-    :param use_fragments: Whether the url should be written as a fragment. Default is False.
 
     :return: The value of the component.
     """
@@ -116,9 +113,7 @@ def st_ant_menu(menu_data = None, key="first_menu", defaultValue=None, defaultSe
             close_auto = close_auto,
             custom_font_awesome_url = custom_font_awesome_url,
             iconMinWidth = iconMinWidth,
-            write_to_url = write_to_url,
-            url_param = url_param,
-            use_fragments = use_fragments
+
     )
 
     # Return the component value, handling the case where it's a list.
