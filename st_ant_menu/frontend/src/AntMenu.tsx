@@ -23,60 +23,18 @@ interface MenuItem {
   label: string | null;
   icon?: React.ReactNode;
   children?: MenuItem[];
-  type?: "group" | "divider" | null;
+  type?: "group" | "divider" | "text" | null;  // added "text" type
   disabled?: boolean;
 }
 
-// // /**
-//  * Recursively parse a hierarchical list of menu items into the expected format.
-//  * @param data The raw menu data to be parsed
-//  * @returns An array of MenuItem objects
-//  */
-// function parseMenuItems(data: any[], iconSize: string): MenuItem[] {
-//   return data.map((item: any) => {
-//     const menuItem: MenuItem = {
-//       key: item.key,
-//       label: item.label === null ? null : "",
-//       icon: undefined,
-//       children: item.children ? parseMenuItems(item.children, iconSize) : undefined,
-//       type: item.type || undefined,
-//       disabled: item.disabled ? true : false,
-//     };
-//     if (item.icon) {
-//       try {
-//         const Icon = Icons[item.icon];
-//         if (Icon) {
-//           menuItem.icon = React.createElement(Icon, {
-//             style: { fontSize: iconSize }
-//           });
-//         }
-//       } catch (error) {
-//         console.warn(`Failed to create icon for "${item.icon}":`, error);
-//       }
-//     }
-//     if (item.label && item.label !== null) {
-//       if (item.label.match(/<(.*?)>/)) {
-//         menuItem.label = (
-//           <span
-//             dangerouslySetInnerHTML={{ __html: item.label }}
-//           ></span>
-//         ) as unknown as string;
-//       } else {
-//         menuItem.label = item.label as string;
-//       }
-//     }
-//     return menuItem;
-//   });
-// }
 
-
-function parseMenuItems(data: any[], iconSize: string): MenuItem[] {
+function parseMenuItems(data: any[], iconSize: string, iconMinWidth: string): MenuItem[] {
   return data.map((item: any) => {
     const menuItem: MenuItem = {
       key: item.key,
       label: item.label === null ? null : "",
       icon: undefined,
-      children: item.children ? parseMenuItems(item.children, iconSize) : undefined,
+      children: item.children ? parseMenuItems(item.children, iconSize, iconMinWidth) : undefined,
       type: item.type || undefined,
       disabled: item.disabled ? true : false,
     };
@@ -85,13 +43,21 @@ function parseMenuItems(data: any[], iconSize: string): MenuItem[] {
       try {
         if (item.icon.startsWith('fa-')) {
           // If the icon is a FontAwesome icon, create an <i> tag
-          menuItem.icon = <i className={`fa ${item.icon}`} style={{ fontSize: iconSize }} />;
+          menuItem.icon = (
+            <div style={{ minWidth: iconMinWidth, display: 'flex', alignItems: 'center' }}>
+              <i className={`fa ${item.icon}`} style={{ fontSize: iconSize }} />
+            </div>
+          );
         } else {
           const Icon = Icons[item.icon];
           if (Icon) {
-            menuItem.icon = React.createElement(Icon, {
-              style: { fontSize: iconSize }
-            });
+            menuItem.icon = (
+              <div style={{ minWidth: iconMinWidth, display: 'flex', alignItems: 'center' }}>
+                {React.createElement(Icon, {
+                  style: { fontSize: iconSize }
+                })}
+              </div>
+            );
           }
         }
       } catch (error) {
@@ -116,38 +82,13 @@ function parseMenuItems(data: any[], iconSize: string): MenuItem[] {
 }
 
 
-/**
- * Get the height of the menu component, taking into account any additional height specified by the user.
- * @returns The total height of the menu, in pixels
- */
-function get_height_menu() {
-  var menu_array = Array.from(document.getElementsByClassName("ant-menu"));
-  var menu_height = 0;
-  menu_array.forEach((element) => {
-    var height = (element as HTMLElement).offsetHeight;
-
-    //if height is an integer return it
-    if (height) {
-      //test integer
-      if (height % 1 === 0) {
-        menu_height = height;
-      }
-    }
-  });
-
-  menu_height = menu_height + 0;
-
-  console.log("menu_height", menu_height - 0);
-
-  return menu_height;
-}
-
 
 /**
  * A React component that renders an Ant Design menu based on the provided menu data.
  */
 const MenuComponent = (props: ComponentProps) => {
-  const { menu_data, key, defaultSelectedKeys, defaultOpenKeys, additionalHeight, multiple, css_styling, theme,menu_click, iconSize,modus,generall_css_styling, inlineIndent} = props.args;
+  const { menu_data, key, defaultSelectedKeys, defaultOpenKeys, additionalHeight, close_auto, multiple, css_styling, theme,menu_click, iconSize,modus,generall_css_styling, inlineIndent, custom_font_awesome_url,
+    iconMinWidth, url_param, write_to_url ,use_fragments} = props.args;
   const [openKeys, setOpenKeys] = useState<string[]>([]);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   const rootSubmenuKeys = menu_data.map((item: any) => item.key);
@@ -185,10 +126,17 @@ const MenuComponent = (props: ComponentProps) => {
       if (menu_click == true) {
         Streamlit.setComponentValue(keys);
       }
+
+      if (close_auto == true) {
       setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
       
+    } else {
+      setOpenKeys(keys);  // Keep all keys
     }
+
   };
+  };
+
 
   const onClick = ({ key }: { key: string }) => {
     if (multiple) {
@@ -211,7 +159,7 @@ const MenuComponent = (props: ComponentProps) => {
     <>
       <Helmet>
         <script
-          src="https://kit.fontawesome.com/c7cbba6207.js"
+          src={custom_font_awesome_url}
           crossOrigin="anonymous"
           id="font-awesome-icons"
         />
@@ -229,18 +177,20 @@ const MenuComponent = (props: ComponentProps) => {
           height: "100%",
           borderRight: 0,
           overflow: "auto",
-          borderRadius: "20px",
+          borderRadius: "10px",
           ...css_styling
         }}
         theme={theme}
-        items={parseMenuItems(menu_data, iconSize)}
+        items={parseMenuItems(menu_data, iconSize, iconMinWidth)}
         multiple={multiple}
-        defaultSelectedKeys={[defaultSelectedKeys]}
-        defaultOpenKeys={[defaultOpenKeys]}
+        defaultSelectedKeys={defaultSelectedKeys}
+        defaultOpenKeys={defaultOpenKeys}
         onClick={onClick}
       />
     </>
   );
 };
+
+
 
 export default withStreamlitConnection(MenuComponent);
