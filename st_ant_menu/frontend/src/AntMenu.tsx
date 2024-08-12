@@ -156,6 +156,7 @@ const MenuComponent = (props: ComponentProps) => {
 
   useEffect(() => {
     if (clickOccurred) {
+      // console.log("Sending selected keys to Streamlit:", selectedKeys);
       Streamlit.setComponentValue(selectedKeys);
     }  }, [selectedKeys]);
 
