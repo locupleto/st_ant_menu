@@ -1,7 +1,7 @@
 import streamlit.components.v1 as components
 import os
 
-_RELEASE = False
+_RELEASE = True
 
 if not _RELEASE:
     # Declare the component with a given name and URL if we're not in release mode.
@@ -53,7 +53,7 @@ def validate_menu_data(menu_data):
             raise ValueError("The 'disabled' field must be a boolean")
 
 
-def st_ant_menu(menu_data = None, key="first_menu", defaultValue=None, defaultSelectedKeys=[], defaultOpenKeys=[], additionalHeight=0, multiple=False, css_styling_menu=None,
+def st_ant_menu(menu_data = None, key="first_menu", defaultValue=[], defaultSelectedKeys=[], defaultOpenKeys=[], additionalHeight=0, multiple=False, css_styling_menu=None,
                  generall_css_styling=None, theme="light",menu_click=False, iconSize=15, modus = "inline", inlineIndent=24, close_auto=True, custom_font_awesome_url = "https://kit.fontawesome.com/c7cbba6207.js",
                  iconMinWidth=20,return_value=True) :
     """
@@ -105,18 +105,16 @@ def st_ant_menu(menu_data = None, key="first_menu", defaultValue=None, defaultSe
         additionalHeight=additionalHeight,
         css_styling_menu=css_styling_menu,
         generall_css_styling=generall_css_styling,
-          theme = theme, 
-          menu_click = menu_click,
-            iconSize = iconSize,
-            modus = modus,
-            inlineIndent = inlineIndent,
-            close_auto = close_auto,
-            custom_font_awesome_url = custom_font_awesome_url,
-            iconMinWidth = iconMinWidth,
-
+        theme = theme, 
+        menu_click = menu_click,
+        iconSize = iconSize,
+        modus = modus,
+        inlineIndent = inlineIndent,
+        close_auto = close_auto,
+        custom_font_awesome_url = custom_font_awesome_url,
+        iconMinWidth = iconMinWidth
     )
-
-    # Return the component value, handling the case where it's a list.
+        # Return the component value, handling the case where it's a list.
     if return_value == True:
         if menu_click == True:
             if isinstance(component_value, list):

@@ -91,6 +91,7 @@ const MenuComponent = (props: ComponentProps) => {
     iconMinWidth} = props.args;
     const [openKeys, setOpenKeys] = useState<string[]>(defaultOpenKeys || []);
     const [selectedKeys, setSelectedKeys] = useState<string[]>(defaultSelectedKeys || []);
+    const [clickOccurred, setClickOccurred] = useState<boolean>(false);  // Track if a click occurred
     const rootSubmenuKeys = menu_data.map((item: any) => item.key);
   
 
@@ -124,7 +125,7 @@ const MenuComponent = (props: ComponentProps) => {
       setOpenKeys(keys);
     
     } else {
-      if (menu_click == true) {
+      if (menu_click == true && clickOccurred) {
         Streamlit.setComponentValue(keys);
       }
 
@@ -140,6 +141,7 @@ const MenuComponent = (props: ComponentProps) => {
 
 
   const onClick = ({ key }: { key: string }) => {
+    setClickOccurred(true);  // Update the state to indicate a click occurred
     if (multiple) {
       if (selectedKeys.includes(key)) {
         setSelectedKeys(selectedKeys.filter(k => k !== key));
@@ -153,8 +155,9 @@ const MenuComponent = (props: ComponentProps) => {
 
 
   useEffect(() => {
-    Streamlit.setComponentValue(selectedKeys);
-  }, [selectedKeys]);
+    if (clickOccurred) {
+      Streamlit.setComponentValue(selectedKeys);
+    }  }, [selectedKeys]);
 
 
 
