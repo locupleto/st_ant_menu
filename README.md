@@ -2,6 +2,10 @@
 
 This custom Streamlit component allows you to easily integrate an Ant Design menu into your Streamlit application. The component is built using [Ant Design](https://ant.design/) and provides a simple interface for creating a menu with nested items and icons.
 
+<a href="https://flucas-component-overview.streamlit.app/?preselect=7" target="_blank">
+    <img src="https://img.shields.io/badge/Live%20Demo-Streamlit-red?style=for-the-badge&logo=streamlit" alt="Live Demo">
+</a>
+
 ## Features
 
 - Hierarchical menu structure
