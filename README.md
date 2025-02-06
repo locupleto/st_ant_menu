@@ -17,15 +17,15 @@ This custom Streamlit component allows you to easily integrate an Ant Design men
 To install this component, simply run:
 
 ```bash
-pip install streamlit-ant-menu
+pip install st_ant_menu
 ```
 
 # Usage
 
 First, import the **st_ant_menu** function from the package:
-
-    from streamlit_ant_men import st_ant_menu
-
+```python
+from st_ant_menu import st_ant_menu
+```
 
 Then, create a menu data structure, and call st_ant_menu with the data:
 
@@ -39,6 +39,7 @@ Then, create a menu data structure, and call st_ant_menu with the data:
         "key": "2",
         "label": "Menu Item 2",
         "icon": "VideoCameraOutlined",
+        "disabled": True
     },
     {
         "key": "3",
