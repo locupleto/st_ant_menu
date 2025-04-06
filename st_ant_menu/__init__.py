@@ -59,6 +59,11 @@ def st_ant_menu(menu_data = None, key="first_menu", defaultValue=[], defaultSele
     """
     Create a menu component that can be used in Streamlit.
 
+    Icon Support:
+    - Ant Design icons: Use the icon name directly (e.g., "UserOutlined")
+    - FontAwesome icons: Prefix with "fa-" (e.g., "fa-ambulance")
+    - Bootstrap icons: Prefix with "bi-" (e.g., "bi-speedometer2")
+
     generall_css_styling example:
 
     .ant-menu-item-divider {
