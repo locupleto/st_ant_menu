@@ -11,26 +11,26 @@ menu_data = [
     {
         "key": "sub1",
         "label": "Ant Design Icons",
-        "icon": "AppstoreOutlined",  # Ant Design icon
+        "icon": "ad-AppstoreOutlined",  # Ant Design icon with new prefix
         "children": [
             {
                 "key": "g1",
                 "label": "<b>Basic Icons</b>",
-                "icon": "HomeOutlined",  # Ant Design icon
+                "icon": "ad-HomeOutlined",  # Ant Design icon with new prefix
                 "children": [
-                    {"key": "1", "label": "Dashboard", "icon": "DashboardOutlined"},  # Ant Design icon
+                    {"key": "1", "label": "Dashboard", "icon": "ad-DashboardOutlined"},  # Ant Design icon with new prefix
                     {"type": "divider"},
-                    {"key": "2", "label": "User Profile", "icon": "UserOutlined"},  # Ant Design icon
+                    {"key": "2", "label": "User Profile", "icon": "ad-UserOutlined"},  # Ant Design icon with new prefix
                 ],
                 "type": "group",
             },
             {
                 "key": "g2",
                 "label": "Data Icons",
-                "icon": "DatabaseOutlined",  # Ant Design icon
+                "icon": "ad-DatabaseOutlined",  # Ant Design icon with new prefix
                 "children": [
-                    {"key": "3", "label": "Analytics", "icon": "BarChartOutlined"},  # Ant Design icon
-                    {"key": "4", "label": "Reports", "icon": "FileTextOutlined"},  # Ant Design icon
+                    {"key": "3", "label": "Analytics", "icon": "ad-BarChartOutlined"},  # Ant Design icon with new prefix
+                    {"key": "4", "label": "Reports", "icon": "ad-FileTextOutlined"},  # Ant Design icon with new prefix
                 ],
                 "type": "group",
             },
@@ -39,17 +39,17 @@ menu_data = [
     {
         "key": "sub2",
         "label": "FontAwesome Icons",
-        "icon": "fa-sharp fa-regular fa-comments",  # FontAwesome icon
+        "icon": "fa-sharp fa-regular fa-comments",  # FontAwesome icon (unchanged)
         "children": [
-            {"key": "5", "label": "Ambulance", "icon": "fa-ambulance"},  # FontAwesome icon
-            {"key": "6", "label": "Dolphin", "icon": "fa-sharp fa-light fa-dolphin"},  # FontAwesome icon
+            {"key": "5", "label": "Ambulance", "icon": "fa-ambulance"},  # FontAwesome icon (unchanged)
+            {"key": "6", "label": "Dolphin", "icon": "fa-sharp fa-light fa-dolphin"},  # FontAwesome icon (unchanged)
             {
                 "key": "sub3",
                 "label": "More Icons",
-                "icon": "fa-sharp fa-light fa-circle-info",  # FontAwesome icon
+                "icon": "fa-sharp fa-light fa-circle-info",  # FontAwesome icon (unchanged)
                 "children": [
-                    {"key": "7", "label": "File Edit", "icon": "fa-sharp fa-light fa-file-pen"},  # FontAwesome icon
-                    {"key": "8", "label": "Comments", "icon": "fa-sharp fa-regular fa-comments"},  # FontAwesome icon
+                    {"key": "7", "label": "File Edit", "icon": "fa-sharp fa-light fa-file-pen"},  # FontAwesome icon (unchanged)
+                    {"key": "8", "label": "Comments", "icon": "fa-sharp fa-regular fa-comments"},  # FontAwesome icon (unchanged)
                 ],
             },
         ],
@@ -58,22 +58,22 @@ menu_data = [
     {
         "key": "sub4",
         "label": "Bootstrap Icons",
-        "icon": "bi-bootstrap",  # Bootstrap icon
+        "icon": "bootstrap",  # Bootstrap icon (no prefix)
         "children": [
-            {"key": "9", "label": "Dashboard", "icon": "bi-speedometer2"},  # Bootstrap icon
-            {"key": "10", "label": "Users", "icon": "bi-people-fill"},  # Bootstrap icon
-            {"key": "11", "label": "Settings", "icon": "bi-gear"},  # Bootstrap icon
-            {"key": "12", "label": "Security", "icon": "bi-shield-lock"},  # Bootstrap icon
+            {"key": "9", "label": "Dashboard", "icon": "speedometer2"},  # Bootstrap icon (no prefix)
+            {"key": "10", "label": "Users", "icon": "people-fill"},  # Bootstrap icon (no prefix)
+            {"key": "11", "label": "Settings", "icon": "gear"},  # Bootstrap icon (no prefix)
+            {"key": "12", "label": "Security", "icon": "shield-lock"},  # Bootstrap icon (no prefix)
         ],
     },
     {
         "key": "grp",
         "label": "<b>Mixed Icons</b>",
-        "icon": "bi-stars",  # Bootstrap icon
+        "icon": "stars",  # Bootstrap icon (no prefix)
         "children": [
-            {"key": "13", "label": "Ant Design", "icon": "BugOutlined"},  # Ant Design icon
-            {"key": "14", "label": "Bootstrap", "icon": "bi-emoji-smile"},  # Bootstrap icon
-            {"key": "15", "label": "FontAwesome", "icon": "fa-ambulance"},  # FontAwesome icon
+            {"key": "13", "label": "Ant Design", "icon": "ad-BugOutlined"},  # Ant Design icon with new prefix
+            {"key": "14", "label": "Bootstrap", "icon": "emoji-smile"},  # Bootstrap icon (no prefix)
+            {"key": "15", "label": "FontAwesome", "icon": "fa-ambulance"},  # FontAwesome icon (unchanged)
         ],
         "type": "group",
     },
@@ -121,15 +121,14 @@ with st.sidebar:
 st.header("Icon Types Demonstration")
 
 col1, col2, col3 = st.columns(3)
-
 with col1:
     st.subheader("Ant Design Icons")
     st.markdown("""
-    Ant Design icons are used directly by name:
+    Ant Design icons use the ad- prefix:
     ```python
-    "icon": "UserOutlined"
-    "icon": "AppstoreOutlined"
-    "icon": "DatabaseOutlined"
+    "icon": "ad-UserOutlined"
+    "icon": "ad-AppstoreOutlined"
+    "icon": "ad-DatabaseOutlined"
     ```
     """)
 
@@ -147,14 +146,14 @@ with col2:
 with col3:
     st.subheader("Bootstrap Icons")
     st.markdown("""
-    Bootstrap icons use the bi- prefix:
+    Bootstrap icons are used directly by name:
     ```python
-    "icon": "bi-bootstrap"
-    "icon": "bi-speedometer2"
-    "icon": "bi-people-fill"
+    "icon": "bootstrap"
+    "icon": "speedometer2"
+    "icon": "people-fill"
     ```
     """)
-
+    
 st.markdown("---")
 st.markdown("""
 ### Documentation

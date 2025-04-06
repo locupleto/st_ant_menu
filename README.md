@@ -1,10 +1,28 @@
 # Streamlit Ant Design Menu Component
 
 This custom Streamlit component allows you to easily integrate an Ant Design menu into your Streamlit application. The component is built using [Ant Design](https://ant.design/) and provides a simple interface for creating a menu with nested items and icons.
+This is a fork of <https://github.com/flucas96/st_ant_menu> by Fabian Lucas. 
 
-<a href="https://flucas-component-overview.streamlit.app/?preselect=7" target="_blank">
-    <img src="https://img.shields.io/badge/Live%20Demo-Streamlit-red?style=for-the-badge&logo=streamlit" alt="Live Demo">
-</a>
+This fork adds Bootstrap icon support and changes the icon prefixing convention:
+- Ant Design icons: Prefix with "ad-" (e.g., "ad-UserOutlined")
+- FontAwesome icons: Prefix with "fa-" (e.g., "fa-ambulance")
+- Bootstrap icons: Use the icon name directly (e.g., "speedometer2")
+
+## Icon Support
+
+This fork adds Bootstrap icon support and changes the icon prefixing convention to the following:
+
+- **Ant Design Icons**: Prefix with "ad-" (e.g., "ad-UserOutlined")
+- **FontAwesome Icons**: Prefix with "fa-" (e.g., "fa-ambulance")
+- **Bootstrap Icons**: Use the icon name directly (e.g., "speedometer2")
+
+Example:
+```python
+menu_data = [
+    {"key": "1", "label": "Ant Design Icon", "icon": "ad-UserOutlined"},
+    {"key": "2", "label": "FontAwesome Icon", "icon": "fa-ambulance"},
+    {"key": "3", "label": "Bootstrap Icon", "icon": "speedometer2"},
+]
 
 ## Features
 

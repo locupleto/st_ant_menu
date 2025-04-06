@@ -6,13 +6,13 @@ with open('README.md') as f:
 
 setuptools.setup(
     name="st_ant_menu",
-    version="0.0.18",
-    author="",
-    author_email="",
-    description="Streamlit Component for ANT Menu",
+    version="0.0.19",
+    author="Urban Ottosson",
+    author_email="urban@ottosson.org",
+    description="Streamlit Component for ANT Menu with Bootstrap icon support",
     long_description=long_desc,
     long_description_content_type='text/markdown',
-    url="https://github.com/flucas96/st_ant_menu",
+    url="https://github.com/locupleto/st_ant_menu",
     packages=setuptools.find_packages(),
     include_package_data=True,
     classifiers=[],

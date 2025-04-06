@@ -59,22 +59,10 @@ function parseMenuItems(
               <i className={`fa ${item.icon}`} style={{ fontSize: iconSize }} />
             </div>
           );
-        } else if (item.icon.startsWith("bi-")) {
-          // Bootstrap icon
-          menuItem.icon = (
-            <div
-              style={{
-                minWidth: iconMinWidth,
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <i className={`bi ${item.icon}`} style={{ fontSize: iconSize }} />
-            </div>
-          );
-        } else {
+        } else if (item.icon.startsWith("ad-")) {
           // Ant Design icon
-          const Icon = Icons[item.icon];
+          const iconName = item.icon.substring(3); // Remove the "ad-" prefix
+          const Icon = Icons[iconName];
           if (Icon) {
             menuItem.icon = (
               <div
@@ -90,6 +78,22 @@ function parseMenuItems(
               </div>
             );
           }
+        } else {
+          // Bootstrap icon (no prefix)
+          menuItem.icon = (
+            <div
+              style={{
+                minWidth: iconMinWidth,
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <i
+                className={`bi bi-${item.icon}`}
+                style={{ fontSize: iconSize }}
+              />
+            </div>
+          );
         }
       } catch (error) {
         console.warn(`Failed to create icon for "${item.icon}":`, error);
