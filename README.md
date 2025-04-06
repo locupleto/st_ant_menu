@@ -17,6 +17,7 @@ menu_data = [
     {"key": "2", "label": "FontAwesome Icon", "icon": "fa-ambulance"},
     {"key": "3", "label": "Bootstrap Icon", "icon": "speedometer2"},
 ]
+```
 
 For more information on available icons from these three families, see:
 - [Ant Design Icons](https://ant.design/components/icon)
