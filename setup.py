@@ -5,7 +5,7 @@ with open('README.md') as f:
 
 setuptools.setup(
     name="st_ant_menu",
-    version="0.0.19",
+    version="0.0.20",
     author="Urban Ottosson",
     author_email="urban@ottosson.org",
     description="Streamlit Component for ANT Menu with Bootstrap icon support",
